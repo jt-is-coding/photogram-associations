@@ -15,15 +15,11 @@
 class Photo < ApplicationRecord
   validates(:poster, { :presence => true })
 
-  ## Indirect associations
-
-  # Photo#fans: returns rows from the users table associated to this photo through its likes
-
   belongs_to(:poster, class_name: "User", foreign_key: "owner_id")
   has_many(:comments, class_name: "Comment", foreign_key: "photo_id")
   has_many(:likes, class_name: "Like", foreign_key: "photo_id")
 
-  has_many(:fans, through: :likes, source: :user)
+  has_many(:fans, through: :likes, source: :fan)
 
   def fans
     my_likes = self.likes

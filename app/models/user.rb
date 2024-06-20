@@ -49,6 +49,9 @@ class User < ApplicationRecord
   has_many(:sent_follow_requests, class_name: "FollowRequest", foreign_key: "sender_id")
   has_many(:received_follow_requests, class_name: "FollowRequest", foreign_key: "recipient_id")
 
+  has_many(:liked_photos, through: :likes, source: :photo)
+  has_many(:commented_photos, through: :comments, source: :photo)
+
   # def comments
   #   my_id = self.id
 
@@ -57,21 +60,21 @@ class User < ApplicationRecord
   #   return matching_comments
   # end
 
-  def own_photos
-    my_id = self.id
+  # def own_photos
+  #   my_id = self.id
 
-    matching_photos = Photo.where({ :owner_id => my_id })
+  #   matching_photos = Photo.where({ :owner_id => my_id })
 
-    return matching_photos
-  end
+  #   return matching_photos
+  # end
 
-  def likes
-    my_id = self.id
+  # def likes
+  #   my_id = self.id
 
-    matching_likes = Like.where({ :fan_id => my_id })
+  #   matching_likes = Like.where({ :fan_id => my_id })
 
-    return matching_likes
-  end
+  #   return matching_likes
+  # end
 
   def liked_photos
     my_likes = self.likes
@@ -103,21 +106,21 @@ class User < ApplicationRecord
     return unique_matching_photos
   end
 
-  def sent_follow_requests
-    my_id = self.id
+  # def sent_follow_requests
+  #   my_id = self.id
 
-    matching_follow_requests = FollowRequest.where({ :sender_id => my_id })
+  #   matching_follow_requests = FollowRequest.where({ :sender_id => my_id })
 
-    return matching_follow_requests
-  end
+  #   return matching_follow_requests
+  # end
 
-  def received_follow_requests
-    my_id = self.id
+  # def received_follow_requests
+  #   my_id = self.id
 
-    matching_follow_requests = FollowRequest.where({ :recipient_id => my_id })
+  #   matching_follow_requests = FollowRequest.where({ :recipient_id => my_id })
 
-    return matching_follow_requests
-  end
+  #   return matching_follow_requests
+  # end
 
   def accepted_sent_follow_requests
     my_sent_follow_requests = self.sent_follow_requests
